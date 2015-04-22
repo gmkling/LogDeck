@@ -1,8 +1,7 @@
 # LogDeck
 A simple C++ logging facility.
 
-This code grew out of a need for logging in my game GravityJam. I realized that I wanted to do some logging for debugging purposes, and 
-that I also wanted some of the same information to be routed into a database for other purposes. So I thought I might be able to mash these
+This code grew out of a need for logging in my game GravityJam. that I wanted to do some logging for debugging purposes, in a traditional way in a text file, but I also wanted database for other purposes. So I thought I might be able to mash these
 together. Also, I've been looking at a smaller project to "spin off" of the larger game. 
 
 Further comments on the purpose and use of LogDeck will be added as it is developed

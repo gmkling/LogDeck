@@ -15,10 +15,8 @@ std::string Log::getLogFilePath()
 
 Log::Log(std::string LogPath)
 {
-    
+  
 }
-
-
 
 std::string Log::getLinePrefix()
 {

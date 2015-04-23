@@ -7,7 +7,7 @@
 
 // simple driver programs to test/demo LogDeck features
 
-#include <stdio>
+#include <iostream>
 #include <string>
 #include <sstream>
 
@@ -16,9 +16,8 @@
 
 int main(int argc, char * argv[])
 {
-
- return 0;
-
+    std::cout<<"Here's your log, you punk."<<std::endl;
+    return 0;
 }
 
 

@@ -1,6 +1,6 @@
 /autom4te.cache
 /config/
-Makefile
+#Makefile
 Makefile.in
 aclocal.m4
 app.info

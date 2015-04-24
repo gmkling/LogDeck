@@ -8,35 +8,62 @@
 
 #include "Log.h"
 
+Log::Log(string logPath)
+{
+    logFile = new std::ofstream;
+
+    if(logPath.empty()) { /* do we need to check for NULL, other cases? */
+        // no path provided, proceed with default
+        string defaultName = getTimeString();
+        // clear out the junk - replace spaces and : with _
+        std::replace(defaultName.begin(), defaultName.end(), ':', '_');
+        std::replace(defaultName.begin(), defaultName.end(), ' ', '_'); 
+        logPath=defaultName; 
+    }
+
+    // open the stream - append to the end if it exists, open for output
+    logFile->open(logPath, std::ios_base::app|std::ios_base::out); 
+    // quick check of the stream
+    if(!logFile->is_open())
+    {
+        throw(std::runtime_error("LogDeck: unable to open log for output."));
+    }
+
+    // done
+}
+
+void Log::closeLog(void)
+{
+
+}
+
+
 std::string Log::getLogFilePath()
 {
     return pathToLog;
 }
 
-Log::Log(std::string LogPath)
+std::string Log::getTimeString(void)
 {
-  
+    // currently the time format is just HH:MM:SS
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+    std::string s = asctime(now); //<<"-"<<clock();
+
+    return s;
 }
+
 
 std::string Log::getLinePrefix()
 {
-    // the tm struct
-    time_t t = time(0);
-    struct tm * now = localtime( & t );
-    
-    // milliseconds
-//    using namespace std::chrono;
-//    milliseconds ms = duration_cast< milliseconds >(
-//                                                    high_resolution_clock::now().time_since_epoch()
-//                                                    );
-    
+   
     // collect line number, time/date stamp
     std::stringstream linePrefix;
     linePrefix.str("");
 
     // date and time
     // if we need something more detailed, look into using the chrono header
-    linePrefix << logLineNumber++ <<" ["<<asctime(now)<<"] ";
+    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"] ";
     return linePrefix.str();
     
 }

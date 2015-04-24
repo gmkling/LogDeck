@@ -11,13 +11,14 @@
 
 #include <stdio.h>
 #include <string>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
 #include <sstream>
 #include <ctime>
+#include <stdexcept>
 
 using std::string;
-
-// We are going to create a class to handle the details of logging, but some macros to use in actual code.
-// In this case we will just create one log, future changes may allow more/different logging mechanisms
 
 class Log {
     
@@ -27,27 +28,30 @@ class Log {
     
 public:
     
-    // constructors - we should only make this if we know where it goes
-    Log(std::ofstream logStream, string logPath);
+    // constructors - this where most of the output stream cofig/setup happens
     Log(string logPath);
     
-    
-    // logging functions
+    // Operation
+    // default logLevel functions
+    // five because, wth
     void infoMsg(string s);
     void warnMsg(string s);
     void errorMsg(string s);
     void fatalMsg(string s);
     void gameMsg(string s);
     
+    // user interfaces with just this func (?)
+    void log(int level, string msg);
+
     // utility
-    std::string getLinePrefix(void); // <timeStamp><dateStamp>
-    bool closeLog(void);
-    
+    string getTimeString(void);
+    string getLinePrefix(void); // <timeStamp><dateStamp>
+    void closeLog(void);
+    string getLogFilePath(void);
+
 private:
+    // internal implementations
     bool logMsg(string s);
-    bool initLogFile(void);
-    std::string getLogFilePath(void);
-    
     double logLineNumber=0;
 };
 

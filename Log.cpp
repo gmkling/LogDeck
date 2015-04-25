@@ -28,13 +28,14 @@ Log::Log(string logPath)
     {
         throw(std::runtime_error("LogDeck: unable to open log for output."));
     }
-
+    
+    logStart = system_clock::now();
     // done
 }
 
 void Log::closeLog(void)
 {
-
+    logFile->close();
 }
 
 
@@ -46,24 +47,35 @@ std::string Log::getLogFilePath()
 std::string Log::getTimeString(void)
 {
     // currently the time format is just HH:MM:SS
-    time_t t = time(0);
-    struct tm * now = localtime( & t );
-    std::string s = asctime(now); //<<"-"<<clock();
-
+    
+    time_t t;
+    std::string s;
+    
+    time(&t);
+    s = ctime(&t);
+    s = s.substr(0, s.size()-1).append("-");
+    
+    // I don't think this is cross platform. Had to comment out an assert in
+    // <chrono>, which claimed that a duration could not be less than the epoch
+    // (0? really? How would you express the duration "3000 bce"?.
+    using namespace std::chrono;
+    system_clock::time_point now = system_clock::now();
+    milliseconds ms = duration_cast<milliseconds>(now-logStart);
+    s.append(std::to_string(ms.count()));
+   
     return s;
 }
 
 
 std::string Log::getLinePrefix()
 {
-   
     // collect line number, time/date stamp
     std::stringstream linePrefix;
+    
     linePrefix.str("");
-
-    // date and time
-    // if we need something more detailed, look into using the chrono header
-    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"] ";
+    linePrefix.fill('0');
+    linePrefix.width(8);
+    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"ms] ";
     return linePrefix.str();
     
 }

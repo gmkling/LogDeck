@@ -15,17 +15,19 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <time.h>
 #include <ctime>
 #include <stdexcept>
+#include <chrono>
 
 using std::string;
-
+using namespace std::chrono;
 class Log {
     
     string pathToLog;
     std::stringstream logLineStream;
     std::ofstream * logFile;
-    
+    system_clock::time_point logStart;    
 public:
     
     // constructors - this where most of the output stream cofig/setup happens

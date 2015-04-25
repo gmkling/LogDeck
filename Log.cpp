@@ -29,7 +29,7 @@ Log::Log(string logPath)
         throw(std::runtime_error("LogDeck: unable to open log for output."));
     }
     
-    logStart = system_clock::now();
+    //logStart = system_clock::now();
     // done
 }
 
@@ -53,15 +53,14 @@ std::string Log::getTimeString(void)
     
     time(&t);
     s = ctime(&t);
-    s = s.substr(0, s.size()-1).append("-");
+    s = s.substr(0, s.size()-1);
+   
     
-    // I don't think this is cross platform. Had to comment out an assert in
-    // <chrono>, which claimed that a duration could not be less than the epoch
-    // (0? really? How would you express the duration "3000 bce"?.
-    using namespace std::chrono;
-    system_clock::time_point now = system_clock::now();
-    milliseconds ms = duration_cast<milliseconds>(now-logStart);
-    s.append(std::to_string(ms.count()));
+    // I don't think system_clock is cross platform. Assert fails in <chrono>
+    //using namespace std::chrono; 
+    //system_clock::time_point now = system_clock::now();
+    //milliseconds ms = duration_cast<milliseconds>(now-logStart);
+    // s = s.append("-").append(std::to_string(ms.count()));
    
     return s;
 }
@@ -75,7 +74,7 @@ std::string Log::getLinePrefix()
     linePrefix.str("");
     linePrefix.fill('0');
     linePrefix.width(8);
-    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"ms] ";
+    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"] ";
     return linePrefix.str();
     
 }

@@ -49,6 +49,7 @@ public:
     string getTimeString(void);
     string getLinePrefix(void); // <timeStamp><dateStamp>
     void closeLog(void);
+    bool checkStreamState(void);
     string getLogFilePath(void);
 
 private:

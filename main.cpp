@@ -23,12 +23,9 @@ int main(int argc, char * argv[])
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     sleep(5);    
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
-    
-    std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
-    
-    std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
-    
-    std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
+    std::cout<<"Reported path from getLogFilePath: "<<l.getLogFilePath()<<std::endl;
+
+    l.closeLog();
     return 0;
 }
 

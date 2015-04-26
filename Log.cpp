@@ -24,18 +24,25 @@ Log::Log(string logPath)
     // open the stream - append to the end if it exists, open for output
     logFile->open(logPath, std::ios_base::app|std::ios_base::out); 
     // quick check of the stream
-    if(!logFile->is_open())
+    if(!logFile->is_open()||(!checkStreamState()))
     {
         throw(std::runtime_error("LogDeck: unable to open log for output."));
     }
     
+    // we have a good logPath, save it.
+    pathToLog=logPath;
+    
     //logStart = system_clock::now();
-    // done
 }
 
 void Log::closeLog(void)
 {
     logFile->close();
+}
+
+bool Log::checkStreamState(void)
+{
+    return logFile->good();    
 }
 
 
@@ -78,4 +85,39 @@ std::string Log::getLinePrefix()
     return linePrefix.str();
     
 }
+
+void Log::log(int level, string msg)
+{
+    // Arg checking
+    if(level>4||level<0) // hard coded to levels 0,1,2,3,4
+    {
+        return; // no-op if log level is invalid
+    }
+
+    // do we need to check if the string is valid? How?
+
+    if (level==0)
+    {
+        // info msg
+    }
+    else if (level==1)
+    {
+        //  warn msg
+    } 
+    else if (level==2)
+    {
+        // error msg
+    }     
+     
+    else if (level==3)
+    {
+        // fatal msg
+    }
+    
+    else if (level==4)
+    {
+        // game  msg
+    }
+}
+
 

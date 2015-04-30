@@ -18,16 +18,27 @@
 #include <time.h>
 #include <ctime>
 #include <stdexcept>
-//#include <chrono>
 
 using std::string;
-//using namespace std::chrono;
+
+// log levels
+
+enum log_level
+{
+    info=1,
+    warn,
+    error,
+    fatal,
+    game,
+    maxLevel
+};
+
 class Log {
     
     string pathToLog;
     std::stringstream logLineStream;
     std::ofstream * logFile;
-//    system_clock::time_point logStart;    
+
 public:
     
     // constructors - this where most of the output stream cofig/setup happens
@@ -43,7 +54,7 @@ public:
     void gameMsg(string s);
     
     // user interfaces with just this func (?)
-    void log(int level, string msg);
+    void log(log_level level, string msg);
 
     // utility
     string getTimeString(void);
@@ -54,7 +65,7 @@ public:
 
 private:
     // internal implementations
-    bool logMsg(string s);
+    bool logPrint(string s);
     double logLineNumber=0;
 };
 

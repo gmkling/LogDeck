@@ -12,7 +12,8 @@ Log::Log(string logPath)
 {
     logFile = new std::ofstream;
 
-    if(logPath.empty()) { /* do we need to check for NULL, other cases? */
+    if(logPath.empty()) 
+    {   // do we need to check for NULL, other cases?
         // no path provided, proceed with default
         string defaultName = getTimeString();
         // clear out the junk - replace spaces and : with _
@@ -23,6 +24,7 @@ Log::Log(string logPath)
 
     // open the stream - append to the end if it exists, open for output
     logFile->open(logPath, std::ios_base::app|std::ios_base::out); 
+
     // quick check of the stream
     if(!logFile->is_open()||(!checkStreamState()))
     {
@@ -32,7 +34,6 @@ Log::Log(string logPath)
     // we have a good logPath, save it.
     pathToLog=logPath;
     
-    //logStart = system_clock::now();
 }
 
 void Log::closeLog(void)
@@ -54,21 +55,14 @@ std::string Log::getLogFilePath()
 std::string Log::getTimeString(void)
 {
     // currently the time format is just HH:MM:SS
-    
+    // this should be configurable in future 
     time_t t;
     std::string s;
     
     time(&t);
     s = ctime(&t);
     s = s.substr(0, s.size()-1);
-   
     
-    // I don't think system_clock is cross platform. Assert fails in <chrono>
-    //using namespace std::chrono; 
-    //system_clock::time_point now = system_clock::now();
-    //milliseconds ms = duration_cast<milliseconds>(now-logStart);
-    // s = s.append("-").append(std::to_string(ms.count()));
-   
     return s;
 }
 
@@ -86,38 +80,46 @@ std::string Log::getLinePrefix()
     
 }
 
-void Log::log(int level, string msg)
+void Log::log(log_level level, string msg)
 {
     // Arg checking
-    if(level>4||level<0) // hard coded to levels 0,1,2,3,4
+    if(level>=maxLevel||level<info) // make sure we are logging on a valid level
     {
         return; // no-op if log level is invalid
     }
 
-    // do we need to check if the string is valid? How?
-
-    if (level==0)
+    switch(level)
     {
-        // info msg
-    }
-    else if (level==1)
-    {
-        //  warn msg
-    } 
-    else if (level==2)
-    {
-        // error msg
-    }     
-     
-    else if (level==3)
-    {
-        // fatal msg
-    }
-    
-    else if (level==4)
-    {
-        // game  msg
+        case log_level::info:
+            logPrint(getLinePrefix()+"<INFO>: "+msg);
+            break;
+        case log_level::warn:
+            logPrint(getLinePrefix()+"<WARN>: "+msg);
+            break;
+        case log_level::error:
+            logPrint(getLinePrefix()+"<ERROR>: "+msg);
+            break;
+        case log_level::fatal:
+            logPrint(getLinePrefix()+"<FATAL>: "+msg);
+            break;
+        case log_level::game:
+            logPrint(getLinePrefix()+"<GAME>: "+msg);
+            break;
+        case log_level::maxLevel:
+            break;
     }
 }
 
+// internal interface to the logStream
+bool Log::logPrint(string s)
+{
+    // Where the rubber meets the road
+    *logFile<<s<<std::endl;
 
+    if(!logFile->good())
+    {
+        return false;
+    }
+
+    return true;
+}

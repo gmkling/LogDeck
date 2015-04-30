@@ -17,6 +17,7 @@
 int main(int argc, char * argv[])
 {
     Log l("./test.txt");
+    /*
     std::cout<<"The time according to getTimeString: "<<l.getTimeString()<<std::endl;
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     sleep(0.1);
@@ -24,6 +25,12 @@ int main(int argc, char * argv[])
     sleep(5);    
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     std::cout<<"Reported path from getLogFilePath: "<<l.getLogFilePath()<<std::endl;
+    */
+    l.log(info, "Testing 123");
+    l.log(warn, "WARNING TEXT");
+    l.log(error, "This is an *error*");
+    l.log(fatal, "TOTAL FAILURE IMMINENT");
+    l.log(game, "Some bs about the game, blah blah");
 
     l.closeLog();
     return 0;

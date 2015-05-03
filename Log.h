@@ -25,12 +25,12 @@ using std::string;
 
 enum log_level
 {
-    info=1,
-    warn,
-    error,
-    fatal,
-    game,
-    maxLevel
+    Log_info=1,
+    Log_warn,
+    Log_error,
+    Log_fatal,
+    Log_game,
+    Log_maxLevel
 };
 
 class Log {
@@ -44,15 +44,6 @@ public:
     // constructors - this where most of the output stream cofig/setup happens
     Log(string logPath);
     
-    // Operation
-    // default logLevel functions
-    // five because, wth
-    void infoMsg(string s);
-    void warnMsg(string s);
-    void errorMsg(string s);
-    void fatalMsg(string s);
-    void gameMsg(string s);
-    
     // user interfaces with just this func (?)
     void log(log_level level, string msg);
 
@@ -65,7 +56,7 @@ public:
 
 private:
     // internal implementations
-    bool logPrint(string s);
+    void logPrint(string s);
     double logLineNumber=0;
 };
 

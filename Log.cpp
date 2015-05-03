@@ -83,43 +83,37 @@ std::string Log::getLinePrefix()
 void Log::log(log_level level, string msg)
 {
     // Arg checking
-    if(level>=maxLevel||level<info) // make sure we are logging on a valid level
+    if(level>=Log_maxLevel||level<Log_info) // make sure we are logging on a valid level
     {
         return; // no-op if log level is invalid
     }
 
     switch(level)
     {
-        case log_level::info:
+        case log_level::Log_info:
             logPrint(getLinePrefix()+"<INFO>: "+msg);
             break;
-        case log_level::warn:
+        case log_level::Log_warn:
             logPrint(getLinePrefix()+"<WARN>: "+msg);
             break;
-        case log_level::error:
+        case log_level::Log_error:
             logPrint(getLinePrefix()+"<ERROR>: "+msg);
             break;
-        case log_level::fatal:
+        case log_level::Log_fatal:
             logPrint(getLinePrefix()+"<FATAL>: "+msg);
             break;
-        case log_level::game:
+        case log_level::Log_game:
             logPrint(getLinePrefix()+"<GAME>: "+msg);
             break;
-        case log_level::maxLevel:
+        case log_level::Log_maxLevel:
             break;
     }
 }
 
 // internal interface to the logStream
-bool Log::logPrint(string s)
+void Log::logPrint(string s)
 {
     // Where the rubber meets the road
     *logFile<<s<<std::endl;
 
-    if(!logFile->good())
-    {
-        return false;
-    }
-
-    return true;
 }

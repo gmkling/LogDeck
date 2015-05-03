@@ -23,12 +23,13 @@ using std::string;
 
 // log levels
 
-enum log_level
+enum log_severity
 {
     Log_info=1,
     Log_warn,
     Log_error,
     Log_fatal,
+    Log_debug,
     Log_game,
     Log_maxLevel
 };
@@ -45,7 +46,7 @@ public:
     Log(string logPath);
     
     // user interfaces with just this func (?)
-    void log(log_level level, string msg);
+    void log(log_severity level, string msg);
 
     // utility
     string getTimeString(void);

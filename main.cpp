@@ -11,13 +11,18 @@
 #include <string>
 #include <sstream>
 
-#include "Log.h"
-  
+// define the logging level
 
-int main(int argc, char * argv[])
+#define LOGDECK_LEVEL_4
+
+#include "LogDeck.h"
+  
+void testLinePrefix(Log & l)
 {
-    Log l("./test.txt");
-    /*
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<"  TESTING LINE PREFIX ON STD::COUT "<<std::endl;
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<std::endl;
     std::cout<<"The time according to getTimeString: "<<l.getTimeString()<<std::endl;
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     sleep(0.1);
@@ -25,16 +30,41 @@ int main(int argc, char * argv[])
     sleep(5);    
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     std::cout<<"Reported path from getLogFilePath: "<<l.getLogFilePath()<<std::endl;
-    */
-    l.log(info, "Testing 123");
-    l.log(warn, "WARNING TEXT");
-    l.log(error, "This is an *error*");
-    l.log(fatal, "TOTAL FAILURE IMMINENT");
-    l.log(game, "Some bs about the game, blah blah");
-
-    l.closeLog();
-    return 0;
 }
 
+void testLoggingMethods(Log & l)
+{
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<"  TESTING LOG METHODS TO FILE "<<std::endl;
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<std::endl;
+    l.log(Log_info, "Testing 123");
+    l.log(Log_warn, "WARNING TEXT");
+    l.log(Log_error, "This is an *error*");
+    l.log(Log_fatal, "TOTAL FAILURE IMMINENT");
+    l.log(Log_game, "Some bs about the game, blah blah");
+
+}
+
+void testLoggingMacros(Log & l)
+{
+    // put in the macros 
+    LOG_FATAL("Fatal log");
+    LOG_ERROR("Error log");
+    LOG_WARN("Warning log");
+    LOG_INFO("Info log");
+    LOG_DEBUG("Debug log");
+    LOG_GAME("Game log");
+}
+
+int main(int argc, char * argv[])
+{
+    Log l("./test.txt");  
+    testLinePrefix(l); 
+    testLoggingMethods(l);
+    l.closeLog();
+    std::cout<<"Done with LogDeck tests."<<std::endl;
+    return 0;
+}
 
 

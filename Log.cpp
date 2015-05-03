@@ -6,7 +6,7 @@
 //
 //
 
-#include "Log.h"
+#include "LogDeck.h"
 
 Log::Log(string logPath)
 {
@@ -80,7 +80,7 @@ std::string Log::getLinePrefix()
     
 }
 
-void Log::log(log_level level, string msg)
+void Log::log(log_severity level, string msg)
 {
     // Arg checking
     if(level>=Log_maxLevel||level<Log_info) // make sure we are logging on a valid level
@@ -90,23 +90,27 @@ void Log::log(log_level level, string msg)
 
     switch(level)
     {
-        case log_level::Log_info:
+        case log_severity::Log_info:
             logPrint(getLinePrefix()+"<INFO>: "+msg);
             break;
-        case log_level::Log_warn:
+        case log_severity::Log_warn:
             logPrint(getLinePrefix()+"<WARN>: "+msg);
             break;
-        case log_level::Log_error:
+        case log_severity::Log_error:
             logPrint(getLinePrefix()+"<ERROR>: "+msg);
             break;
-        case log_level::Log_fatal:
+        case log_severity::Log_fatal:
             logPrint(getLinePrefix()+"<FATAL>: "+msg);
             break;
-        case log_level::Log_game:
+        case log_severity::Log_debug:
+            logPrint(getLinePrefix()+"<DEBUG>: "+msg);
+        case log_severity::Log_game:
             logPrint(getLinePrefix()+"<GAME>: "+msg);
             break;
-        case log_level::Log_maxLevel:
+        case log_severity::Log_maxLevel:
             break;
+        default:
+            return;
     }
 }
 

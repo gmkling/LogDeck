@@ -30,6 +30,7 @@ void testLinePrefix(Log & l)
     sleep(5);    
     std::cout<<"The time prefix according to getLinePrefix: "<<l.getLinePrefix()<<std::endl;
     std::cout<<"Reported path from getLogFilePath: "<<l.getLogFilePath()<<std::endl;
+    std::cout<<"************ TEST COMPLETE ************"<<std::endl;
 }
 
 void testLoggingMethods(Log & l)
@@ -43,11 +44,16 @@ void testLoggingMethods(Log & l)
     l.log(Log_error, "This is an *error*");
     l.log(Log_fatal, "TOTAL FAILURE IMMINENT");
     l.log(Log_game, "Some bs about the game, blah blah");
-
+    std::cout<<"************ TEST COMPLETE ************"<<std::endl;
 }
 
 void testLoggingMacros(Log & l)
 {
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<"  TESTING MACROS"<<std::endl;
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<std::endl;
+ 
     // put in the macros 
     LOG_FATAL("Fatal log");
     LOG_ERROR("Error log");
@@ -55,6 +61,7 @@ void testLoggingMacros(Log & l)
     LOG_INFO("Info log");
     LOG_DEBUG("Debug log");
     LOG_GAME("Game log");
+    std::cout<<"************ TEST COMPLETE ************"<<std::endl;
 }
 
 int main(int argc, char * argv[])
@@ -62,6 +69,7 @@ int main(int argc, char * argv[])
     Log l("./test.txt");  
     testLinePrefix(l); 
     testLoggingMethods(l);
+    testLoggingMacros(l);
     l.closeLog();
     std::cout<<"Done with LogDeck tests."<<std::endl;
     return 0;

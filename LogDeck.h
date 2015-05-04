@@ -19,14 +19,20 @@
 #endif
 
 #ifdef LOGDECK_LEVEL_2
+    #define LOGGING_LEVEL_FATAL
     #define LOGGING_LEVEL_ERROR
 #endif
 
 #ifdef LOGDECK_LEVEL_3
+    #define LOGGING_LEVEL_FATAL
+    #define LOGGING_LEVEL_ERROR
     #define LOGGING_LEVEL_WARN
 #endif
 
 #ifdef LOGDECK_LEVEL_4
+    #define LOGGING_LEVEL_FATAL
+    #define LOGGING_LEVEL_ERROR
+    #define LOGGING_LEVEL_WARN
     #define LOGGING_LEVEL_INFO
     #define LOGGING_LEVEL_DEBUG
     #define LOGGING_LEVEL_GAME

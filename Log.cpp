@@ -34,6 +34,9 @@ Log::Log(string logPath)
     // we have a good logPath, save it.
     pathToLog=logPath;
     
+    // get current time
+
+    gettimeofday(&timeStart, NULL);
 }
 
 void Log::closeLog(void)
@@ -71,11 +74,17 @@ std::string Log::getLinePrefix()
 {
     // collect line number, time/date stamp
     std::stringstream linePrefix;
+    gettimeofday(&curTime, NULL);
+    sec = curTime.tv_sec - timeStart.tv_sec;
+    mSec = curTime.tv_usec - timeStart.tv_usec;
     
     linePrefix.str("");
     linePrefix.fill('0');
     linePrefix.width(8);
-    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<"] ";
+    linePrefix << logLineNumber++ <<" ["<<getTimeString()<<" ";
+    linePrefix.fill('0');
+    linePrefix.width(8);
+    linePrefix << sec <<"."<< mSec <<"] ";
     return linePrefix.str();
     
 }
@@ -104,6 +113,7 @@ void Log::log(log_severity level, string msg)
             break;
         case log_severity::Log_debug:
             logPrint(getLinePrefix()+"<DEBUG>: "+msg);
+            break;
         case log_severity::Log_game:
             logPrint(getLinePrefix()+"<GAME>: "+msg);
             break;

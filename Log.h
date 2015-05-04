@@ -15,8 +15,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <sys/time.h>
 #include <time.h>
-#include <ctime>
 #include <stdexcept>
 
 using std::string;
@@ -39,6 +39,8 @@ class Log {
     string pathToLog;
     std::stringstream logLineStream;
     std::ofstream * logFile;
+    struct timeval curTime, timeStart;
+    double sec, mSec;
 
 public:
     

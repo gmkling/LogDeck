@@ -1,0 +1,29 @@
+Roadmap for LogDeck
+
+------------
+0.1 Features
+------------
+
+Stream Setup: Default text output (ostream)
+LogLevel Setup: Default setup <time/datestamp>[LevelName]{Message}
+Operation: Call log functions
+Teardown: Housekeeping for default systems
+
+------------
+0.2 Features
+------------
+
+Stream Setup: User-defined/provided streams
+LogLevel Setup: Custom datafields, user defined formatting?
+Operation: Log utility functions (clear, new file, send log via email, etc)
+Teardown: none
+
+------------
+0.3 Features
+------------
+
+Stream setup: generalize for database
+LogLevel: Database logging schema setup?
+Operation: database snapshots, reports, dynamic formatting
+Teardown: persistent state
+

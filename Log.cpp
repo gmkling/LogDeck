@@ -75,16 +75,18 @@ std::string Log::getLinePrefix()
     // collect line number, time/date stamp
     std::stringstream linePrefix;
     gettimeofday(&curTime, NULL);
-    sec = curTime.tv_sec - timeStart.tv_sec;
-    mSec = curTime.tv_usec - timeStart.tv_usec;
+    sec = (curTime.tv_sec - timeStart.tv_sec);
+    mSec = (curTime.tv_usec - timeStart.tv_usec)/1.0e05;
     
     linePrefix.str("");
     linePrefix.fill('0');
     linePrefix.width(8);
     linePrefix << logLineNumber++ <<" ["<<getTimeString()<<" ";
     linePrefix.fill('0');
-    linePrefix.width(8);
-    linePrefix << sec <<"."<< mSec <<"] ";
+    linePrefix.precision(8);
+    //linePrefix << sec <<"."<< mSec <<"] ";
+    // milliseconds since start of program
+    linePrefix << sec+mSec <<"] ";
     return linePrefix.str();
     
 }

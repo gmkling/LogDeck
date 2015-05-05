@@ -64,12 +64,38 @@ void testLoggingMacros(Log & l)
     std::cout<<"************ TEST COMPLETE ************"<<std::endl;
 }
 
+void testLotsOfLogging(Log & l)
+{
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<"  TESTING LOTS OF LOGGING "<<std::endl;
+    std::cout<<"*************************************"<<std::endl;
+    std::cout<<std::endl;
+    float sleepTime=1.0;
+    std::string sleepStr;
+
+    for(int i=0; i<100; i++)
+    {
+        LOG_FATAL("Fatal log");
+        LOG_ERROR("Error log");
+        LOG_WARN("Warning log");
+        sleepTime = rand()%2 + 0.01;
+        sleepStr = std::to_string(sleepTime);
+        LOG_INFO("Sleep time: " + sleepStr);
+        LOG_DEBUG("Debug log");
+        LOG_GAME("Game log");
+        sleep(sleepTime); // sleep some portion of a second
+    }
+    std::cout<<"************ TEST COMPLETE ************"<<std::endl;
+
+}
+
 int main(int argc, char * argv[])
 {
     Log l("./test.txt");  
     testLinePrefix(l); 
     testLoggingMethods(l);
     testLoggingMacros(l);
+    testLotsOfLogging(l);
     l.closeLog();
     std::cout<<"Done with LogDeck tests."<<std::endl;
     return 0;

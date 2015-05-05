@@ -29,4 +29,4 @@ print-flags:
 	echo CXXFLAGS is $(CXXFLAGS) $(INCLUDES)
 
 clean: 
-	rm *.o LogDeckTest a.out
+	rm *.o LogDeckTest 

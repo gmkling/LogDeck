@@ -11,43 +11,55 @@
 
 #include <stdio.h>
 #include <string>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
 #include <sstream>
-#include <ctime>
+#include <sys/time.h>
+#include <time.h>
+#include <stdexcept>
 
 using std::string;
 
-// We are going to create a class to handle the details of logging, but some macros to use in actual code.
-// In this case we will just create one log, future changes may allow more/different logging mechanisms
+// log levels
+
+enum log_severity
+{
+    Log_info=1,
+    Log_warn,
+    Log_error,
+    Log_fatal,
+    Log_debug,
+    Log_game,
+    Log_maxLevel
+};
 
 class Log {
     
     string pathToLog;
     std::stringstream logLineStream;
     std::ofstream * logFile;
-    
+    struct timeval curTime, timeStart;
+    double sec, mSec;
+
 public:
     
-    // constructors - we should only make this if we know where it goes
-    Log(std::ofstream logStream, string logPath);
+    // constructors - this where most of the output stream cofig/setup happens
     Log(string logPath);
     
-    
-    // logging functions
-    void infoMsg(string s);
-    void warnMsg(string s);
-    void errorMsg(string s);
-    void fatalMsg(string s);
-    void gameMsg(string s);
-    
+    // user interfaces with just this func (?)
+    void log(log_severity level, string msg);
+
     // utility
-    std::string getLinePrefix(void); // <timeStamp><dateStamp>
-    bool closeLog(void);
-    
+    string getTimeString(void);
+    string getLinePrefix(void); // <timeStamp><dateStamp>
+    void closeLog(void);
+    bool checkStreamState(void);
+    string getLogFilePath(void);
+
 private:
-    bool logMsg(string s);
-    bool initLogFile(void);
-    std::string getLogFilePath(void);
-    
+    // internal implementations
+    void logPrint(string s);
     double logLineNumber=0;
 };
 
